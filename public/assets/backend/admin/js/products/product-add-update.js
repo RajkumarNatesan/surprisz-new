@@ -217,3 +217,96 @@ $(".image-uploader .zip-remove-btn").on("click", function () {
 
     $(this).hide();
 });
+
+let groupIndex = $(".addon-group-row").length;
+
+$(document).on("click", ".add-addon-group-row", function () {
+    let groupHtml = `
+        <div class="card addon-group-row border mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="col-md-10">
+                    <label class="title-color font-weight-bold">${translate("group_name")}</label>
+                    <input type="text" name="addon_group_name[${groupIndex}]" class="form-control" placeholder="${translate("ex:_Choose_Sauce")}">
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm remove-addon-group-row p-0">
+                    <i class="fi-sr-trash lh-0 fs-6 p-2"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="addon-item-section" data-item-count="1">
+                    <div class="row g-2 addon-item-row border rounded p-2 mb-2">
+                        <div class="col-md-7">
+                            <label class="title-color">${translate("item_name")}</label>
+                            <input type="text" name="addon_item_name[${groupIndex}][]" class="form-control" placeholder="${translate("ex:_Tomato_Sauce")}">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="title-color">${translate("price")}</label>
+                            <input type="number" step="0.01" name="addon_item_price[${groupIndex}][]" class="form-control" value="0" min="0">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="title-color d-block text-center">${translate("is_active")}</label>
+                            <label class="switcher d-flex justify-content-center">
+                                <input type="checkbox" name="addon_item_active[${groupIndex}][0]" class="switcher_input" checked>
+                                <span class="switcher_control"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end">
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-addon-item-row w-100">
+                                <i class="lh-0 fs-6 p-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm add-addon-item-row" data-index="${groupIndex}">
+                    <i class="fi-rr-plus"></i> ${translate("add_item")}
+                </button>
+            </div>
+        </div>`;
+    $("#addon-group-section").append(groupHtml);
+    groupIndex++;
+});
+
+$(document).on("click", ".add-addon-item-row", function () {
+    let currentGroupIndex = $(this).data("index");
+    let section = $(this).closest(".card-body").find(".addon-item-section");
+    let currentItemIndex = section.data("item-count") || section.find(".addon-item-row").length;
+    let itemHtml = `
+        <div class="row g-2 addon-item-row border rounded p-2 mb-2">
+            <div class="col-md-7">
+                <label class="title-color">${translate("item_name")}</label>
+                <input type="text" name="addon_item_name[${currentGroupIndex}][]" class="form-control" placeholder="${translate("ex:_Tomato_Sauce")}">
+            </div>
+            <div class="col-md-2">
+                <label class="title-color">${translate("price")}</label>
+                <input type="number" step="0.01" name="addon_item_price[${currentGroupIndex}][]" class="form-control" value="0" min="0">
+            </div>
+            <div class="col-md-2">
+                <label class="title-color d-block text-center">${translate("is_active")}</label>
+                <label class="switcher d-flex justify-content-center">
+                    <input type="checkbox" name="addon_item_active[${currentGroupIndex}][${currentItemIndex}]" class="switcher_input" checked>
+                    <span class="switcher_control"></span>
+                </label>
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="button" class="btn btn-outline-danger btn-sm remove-addon-item-row w-100">
+                    <i class="fi-sr-trash lh-0 fs-6 p-2"></i>
+                </button>
+            </div>
+        </div>`;
+    section.append(itemHtml);
+    section.data("item-count", currentItemIndex + 1);
+});
+
+$(document).on("click", ".remove-addon-group-row", function () {
+    $(this).closest(".addon-group-row").remove();
+});
+
+$(document).on("click", ".remove-addon-item-row", function () {
+    $(this).closest(".addon-item-row").remove();
+});
+
+function translate(key) {
+    // This is a simple fallback if the global translate function isn't available or if we want to handle unique keys.
+    // In this project, many keys are handled via data attributes or global JS translation objects if available.
+    return key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+}

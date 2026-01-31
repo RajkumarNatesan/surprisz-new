@@ -35,6 +35,15 @@
                         if ($translation->locale == $language && $translation->key == "description") {
                             $translate[$language]['description'] = $translation->value;
                         }
+                        if ($translation->locale == $language && $translation->key == "short_description") {
+                            $translate[$language]['short_description'] = $translation->value;
+                        }
+                        if ($translation->locale == $language && $translation->key == "highlights") {
+                            $translate[$language]['highlights'] = $translation->value;
+                        }
+                        if ($translation->locale == $language && $translation->key == "faqs") {
+                            $translate[$language]['faqs'] = $translation->value;
+                        }
                     }
                 }
                 ?>
@@ -104,6 +113,38 @@
                         <textarea name="description[]" id="description-{{getLanguageCode($language)}}"
                                     style="display:none;" data-required-msg="{{ translate('Description_field_is_required') }}" required>{!! $translate[$language]['description']??$product['details'] !!}</textarea>
                         <div class="blue-fire-animation"></div>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ getLanguageCode($language) }}_short_description">{{ translate('short_description') }}
+                        ({{ strtoupper($language) }})</label>
+                    <div class="outline-wrapper" id="short-description-container-{{ getLanguageCode($language)}}">
+                        <div id="short-description-{{ getLanguageCode($language) }}-editor" class="quill-editor editor-min-h-80">{!! $translate[$language]['short_description']??$product['short_description'] !!}</div>
+                        <textarea name="short_description[]" id="short-description-{{ getLanguageCode($language) }}"
+                                  style="display:none;">{!! $translate[$language]['short_description']??$product['short_description'] !!}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ getLanguageCode($language) }}_highlights">{{ translate('highlights') }}
+                        ({{ strtoupper($language) }})</label>
+                    <div class="outline-wrapper" id="highlights-container-{{ getLanguageCode($language)}}">
+                        <div id="highlights-{{ getLanguageCode($language) }}-editor" class="quill-editor editor-min-h-80">{!! $translate[$language]['highlights']??$product['highlights'] !!}</div>
+                        <textarea name="highlights[]" id="highlights-{{ getLanguageCode($language) }}"
+                                  style="display:none;">{!! $translate[$language]['highlights']??$product['highlights'] !!}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ getLanguageCode($language) }}_faqs">{{ translate('faqs') }}
+                        ({{ strtoupper($language) }})</label>
+                    <div class="outline-wrapper" id="faqs-container-{{ getLanguageCode($language)}}">
+                        <div id="faqs-{{ getLanguageCode($language) }}-editor" class="quill-editor editor-min-h-80">{!! $translate[$language]['faqs']??$product['faqs'] !!}</div>
+                        <textarea name="faqs[]" id="faqs-{{ getLanguageCode($language) }}"
+                                  style="display:none;">{!! $translate[$language]['faqs']??$product['faqs'] !!}</textarea>
                     </div>
                 </div>
             </div>

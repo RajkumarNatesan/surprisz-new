@@ -183,6 +183,7 @@ class ProductController extends BaseController
         $savedProduct = $this->productRepo->add(data: $dataArray);
         $this->productRepo->addRelatedTags(request: $request, product: $savedProduct);
         $this->translationRepo->add(request: $request, model: 'App\Models\Product', id: $savedProduct->id);
+        $service->saveAddOns(request: $request, product: $savedProduct);
         $this->updateProductAuthorAndPublishingHouse(request: $request, product: $savedProduct);
 
         $digitalFileArray = $service->getAddProductDigitalVariationData(request: $request, product: $savedProduct);
@@ -287,6 +288,7 @@ class ProductController extends BaseController
         $this->productRepo->update(id: $id, data: $dataArray);
         $this->productRepo->addRelatedTags(request: $request, product: $product);
         $this->translationRepo->update(request: $request, model: 'App\Models\Product', id: $id);
+        $service->saveAddOns(request: $request, product: $product);
 
         self::getDigitalProductUpdateProcess($request, $product);
 

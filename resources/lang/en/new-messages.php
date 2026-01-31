@@ -959,4 +959,7 @@ return [
 	"here_you_can_setup_how_many_days_a_customer_has_to_send_a_refund_request_and_how_can_admin_send_the_refund_amount_,_to_change_the_customer_wallet_setting_," => "Here you can setup how many days a customer has to send a refund request and how can admin send the refund amount , to change the customer wallet setting ,",
 	"Order_delivered" => "Order delivered",
 	"review_image_removed_successfully" => "Review image removed successfully",
+	"currently_no_payment_gateway_supported_for_USD_currency." => "Currently no payment gateway supported for USD currency.",
+	"Add_extra_options_or_features_that_customers_can_select_along_with_the_main_product." => "Add extra options or features that customers can select along with the main product.",
+	"no_category_found" => "No category found",
 ];

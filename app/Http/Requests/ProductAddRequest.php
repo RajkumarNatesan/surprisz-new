@@ -45,6 +45,9 @@ class ProductAddRequest extends Request
             'code' => 'required' . '|' . 'regex:/^[a-zA-Z0-9]+$/' . '|' . 'min' . ':6|' . 'max' . ':20|' . 'unique' . ':products',
             'minimum_order_qty' => 'required' . '|' . 'numeric' . '|' . 'min' . ':1',
             'video_url' => 'nullable|url',
+            'short_description' => 'required',
+            'highlights' => 'required',
+            'faqs' => 'required',
         ];
 
         if (!isset($this['existing_thumbnail'])) {

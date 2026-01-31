@@ -1680,3 +1680,7 @@ input.form-control.input-section-bg2, textarea.form-control.input-section-bg2[re
 .space-need.multi_image_picker .spartan_item_wrapper:last-child {
     margin-inline-end: 0px !important;
 }
+
+.lh-0 {
+    line-height: 0;
+}

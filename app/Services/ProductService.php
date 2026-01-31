@@ -567,7 +567,7 @@ class ProductService
             'minimum_order_qty' => $request['minimum_order_qty'],
             'video_provider' => 'youtube',
             'video_url' => $request['video_url'],
-            'status' => $addedBy == 'admin' ? 1 : 0,
+            'status' => $addedBy == 'admin' ? ($request->has('status') ? 1 : 0) : 0,
             'request_status' => $addedBy == 'admin' ? 1 : (getWebConfig(name: 'new_product_approval') == 1 ? 0 : 1),
             'shipping_cost' => $request['product_type'] == 'physical' ? currencyConverter(amount: $request['shipping_cost']) : 0,
             'multiply_qty' => ($request['product_type'] == 'physical') ? ($request['multiply_qty'] == 'on' ? 1 : 0) : 0, //to be changed in form multiply_qty
@@ -580,6 +580,9 @@ class ProductService
             'meta_title' => $request['meta_title'],
             'meta_description' => $request['meta_description'],
             'meta_image' => $request->has('meta_image') ? $this->upload(dir: 'product/meta/', format: 'webp', image: $request['meta_image']) : $request->existing_meta_image,
+            'short_description' => $request['short_description'][array_search('en', $request['lang'])],
+            'highlights' => $request['highlights'][array_search('en', $request['lang'])],
+            'faqs' => $request['faqs'][array_search('en', $request['lang'])],
         ];
     }
 
@@ -648,6 +651,10 @@ class ProductService
             'meta_title' => $request['meta_title'],
             'meta_description' => $request['meta_description'],
             'meta_image' => $request->file('meta_image') ? $this->update(dir: 'product/meta/', oldImage: $product['meta_image'], format: 'png', image: $request['meta_image']) : $product['meta_image'],
+            'short_description' => $request['short_description'][array_search('en', $request['lang'])],
+            'highlights' => $request['highlights'][array_search('en', $request['lang'])],
+            'faqs' => $request['faqs'][array_search('en', $request['lang'])],
+            'status' => $updateBy == 'admin' ? ($request->has('status') ? 1 : $product->status) : $product->status,
         ];
 
         if ($request->file('image')) {
@@ -812,6 +819,36 @@ class ProductService
             'products' => $products,
             'productsTax' => $productsTax,
         ];
+    }
+
+    public function saveAddOns(object $request, object $product): void
+    {
+        $product->addOnGroups()->each(function ($group) {
+            $group->items()->delete();
+        });
+        $product->addOnGroups()->delete();
+
+        if ($request->has('addon_group_name')) {
+            foreach ($request->addon_group_name as $gIndex => $groupName) {
+                if ($groupName) {
+                    $group = $product->addOnGroups()->create([
+                        'name' => $groupName,
+                    ]);
+
+                    if (isset($request->addon_item_name[$gIndex])) {
+                        foreach ($request->addon_item_name[$gIndex] as $iKey => $itemName) {
+                            if ($itemName) {
+                                $group->items()->create([
+                                    'name' => $itemName,
+                                    'price' => currencyConverter(amount: $request->addon_item_price[$gIndex][$iKey] ?? 0),
+                                    'is_active' => isset($request->addon_item_active[$gIndex][$iKey]) ? 1 : 0,
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function getAddProductDigitalVariationData(object $request, object|array $product): array

@@ -62,6 +62,9 @@ class ProductUpdateRequest extends FormRequest
                 Rule::unique('products', 'code')->ignore($product->id, 'id'),
             ],
             'video_url' => 'nullable|url',
+            'short_description' => 'required',
+            'highlights' => 'required',
+            'faqs' => 'required',
         ];
     }
 

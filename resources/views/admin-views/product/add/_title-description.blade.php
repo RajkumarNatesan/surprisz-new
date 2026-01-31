@@ -91,6 +91,39 @@
                     </div>
 
                 </div>
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ $lang }}_short_description">{{ translate('short_description') }}
+                        ({{ strtoupper($lang) }})</label>
+                    <div class="outline-wrapper" id="short-description-container-{{ getLanguageCode($lang)}}">
+                        <div id="short-description-{{ getLanguageCode($lang) }}-editor" class="quill-editor editor-min-h-80">{!! old('short_description') !!}</div>
+                        <textarea name="short_description[]" id="short-description-{{ getLanguageCode($lang) }}"
+                                  style="display:none;">{{ old('short_description') }}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ $lang }}_highlights">{{ translate('highlights') }}
+                        ({{ strtoupper($lang) }})</label>
+                    <div class="outline-wrapper" id="highlights-container-{{ getLanguageCode($lang)}}">
+                        <div id="highlights-{{ getLanguageCode($lang) }}-editor" class="quill-editor editor-min-h-80">{!! old('highlights') !!}</div>
+                        <textarea name="highlights[]" id="highlights-{{ getLanguageCode($lang) }}"
+                                  style="display:none;">{{ old('highlights') }}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label"
+                            for="{{ $lang }}_faqs">{{ translate('faqs') }}
+                        ({{ strtoupper($lang) }})</label>
+                    <div class="outline-wrapper" id="faqs-container-{{ getLanguageCode($lang)}}">
+                        <div id="faqs-{{ getLanguageCode($lang) }}-editor" class="quill-editor editor-min-h-80">{!! old('faqs') !!}</div>
+                        <textarea name="faqs[]" id="faqs-{{ getLanguageCode($lang) }}"
+                                  style="display:none;">{{ old('faqs') }}</textarea>
+                    </div>
+                </div>
+
             </div>
         @endforeach
     </div>

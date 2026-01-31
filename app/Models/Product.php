@@ -120,6 +120,9 @@ class Product extends Model
         'digital_file_ready_storage_type',
         'is_shipping_cost_updated',
         'temp_shipping_cost',
+        'short_description',
+        'highlights',
+        'faqs',
     ];
 
     /**
@@ -175,6 +178,9 @@ class Product extends Model
         'digital_product_extensions' => 'array',
         'thumbnail_storage_type' => 'string',
         'digital_file_ready_storage_type' => 'string',
+        'short_description' => 'string',
+        'highlights' => 'string',
+        'faqs' => 'string',
     ];
 
     protected $appends = ['is_shop_temporary_close', 'thumbnail_full_url', 'preview_file_full_url', 'color_images_full_url', 'meta_image_full_url', 'images_full_url', 'digital_file_ready_full_url'];
@@ -362,6 +368,16 @@ class Product extends Model
     public function flashDealProducts(): HasMany
     {
         return $this->hasMany(FlashDealProduct::class);
+    }
+
+    public function subProducts(): HasMany
+    {
+        return $this->hasMany(ProductSubProduct::class);
+    }
+
+    public function addOnGroups(): HasMany
+    {
+        return $this->hasMany(ProductAddOnGroup::class);
     }
 
     public function scopeFlashDeal($query, $flashDealID)

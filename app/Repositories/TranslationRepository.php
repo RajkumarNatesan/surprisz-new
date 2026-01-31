@@ -16,7 +16,7 @@ class TranslationRepository implements TranslationRepositoryInterface
     public function add(object $request, string $model, int|string $id): bool
     {
         foreach ($request->lang as $index => $key) {
-            foreach (['name', 'description', 'title'] as $type) {
+            foreach (['name','description','title', 'short_description', 'highlights', 'faqs'] as $type){
                 if (isset($request[$type][$index]) && $key != 'en') {
                     $this->translation->insert(
                         [
@@ -36,7 +36,7 @@ class TranslationRepository implements TranslationRepositoryInterface
     public function update(object $request, string $model, int|string $id): bool
     {
         foreach ($request->lang as $index => $key) {
-            foreach (['name', 'description', 'title'] as $type) {
+            foreach (['name','description','title', 'short_description', 'highlights', 'faqs'] as $type){
                 if (isset($request[$type][$index]) && $key != 'en') {
                     $this->translation->updateOrInsert(
                         [
