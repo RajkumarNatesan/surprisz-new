@@ -181,7 +181,8 @@ span.badge-accent:hover {
 }
 
 .custom-light-primary-color-20 {
-    background-color: var(--web-primary-20);
+    background: #ed9191;
+    background: linear-gradient(128deg, rgba(237, 145, 145, 1) 0%, rgba(219, 59, 75, 1) 52%, rgba(227, 0, 8, 1) 100%);
 }
 
 .password-toggle-btn
