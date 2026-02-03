@@ -318,7 +318,7 @@ class ProductController extends Controller
     {
         $user = Helpers::getCustomerInformation($request);
 
-        $product = Product::active()->with(['reviews.customer', 'seller.shop', 'tags', 'digitalVariation', 'clearanceSale' => function ($query) {
+        $product = Product::active()->with(['reviews.customer', 'seller.shop', 'tags', 'digitalVariation', 'addOnGroups.items', 'clearanceSale' => function ($query) {
                 return $query->active();
             }])
             ->withCount(['wishList' => function ($query) use ($user) {
