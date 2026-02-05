@@ -385,7 +385,7 @@ class ProductController extends Controller
     public function details(Request $request, $id): JsonResponse
     {
         $seller = $request->seller;
-        $product = Product::withoutGlobalScopes()->with(['seoInfo', 'digitalProductAuthors', 'digitalProductPublishingHouse', 'clearanceSale' => function ($query) {
+        $product = Product::withoutGlobalScopes()->with(['seoInfo', 'digitalProductAuthors', 'addOnGroups.items', 'digitalProductPublishingHouse', 'clearanceSale' => function ($query) {
             return $query->active();
         }, 'taxVats' => function ($query) {
             return $query->with(['tax'])->wherehas('tax', function ($query) {
