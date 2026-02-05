@@ -347,7 +347,7 @@ class ProductController extends Controller
             ], 401);
         }
 
-        $product = Product::withoutGlobalScopes()->with('translations')->find($id);
+        $product = Product::withoutGlobalScopes()->with('translations', 'addOnGroups.items')->find($id);
         $product = Helpers::product_data_formatting($product);
 
         return response()->json($product, 200);
